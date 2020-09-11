@@ -1,0 +1,26 @@
+{
+  "name": "profesional-js",
+  "version": "1.0.0",
+  "description": "Comparto el codigo que cree a lo largo del curso de JS profesional en platzi, asi como las notas que hice a lo largo del mismo",
+  "main": "index.js",
+  "scripts": {
+    "start": "live-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hiddenberg/profesional-JS-platzi.git"
+  },
+  "keywords": [
+    "video",
+    "player"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Hiddenberg/profesional-JS-platzi/issues"
+  },
+  "homepage": "https://github.com/Hiddenberg/profesional-JS-platzi#readme",
+  "devDependencies": {
+    "live-server": "^1.2.1"
+  }
+}
