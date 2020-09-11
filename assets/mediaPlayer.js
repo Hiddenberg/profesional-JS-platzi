@@ -43,3 +43,5 @@ button.onclick = () => {
 
 // ↓ click directamente en el video
 video.addEventListener('click',player.playPause);
+
+domc

@@ -21,8 +21,16 @@
 
       <button>Play/Pause</button>
     </main>
+    <script src="./assets/mediaPlayer.js"></script>
+    <!--
+      ↓ Se pueden agregar script ya sea del mismo dominio, o externos de diferentes formas
 
-    <script src="./assets/mediaPlayer.js">
-    </script>
+      <script src="./assets/mediaPlayer.js"></script>// ←De esta forma el cuando el navegador va leyendo el dom, se detiene, obtiene (hace fetch)
+      el codigo, lo ejecuta, y despues continua
+      <script async src="./assets/mediaPlayer.js"></script> // ← De esta el fetch se hace de forma asincrona, sin interrumpir la lectura del DOM
+      y en cuanto se tenga la respuesta de ese fetch lo ejecuta en ese momento
+      <script defer src="./assets/mediaPlayer.js"></script> // ← Esto lo que hace es obtener, o hacer el fetch del codigo de forma asincrona,
+      PERO espera a que la lectura del DOM termine para ejecutar el script
+    -->
   </body>
 </html>
