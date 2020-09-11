@@ -1,47 +1,29 @@
-const video = document.querySelector("video");
-const button = document.querySelector("button");
-let head = document.getElementById('header');
-
-
 /* A partir de Ecmascript 6 se pueden usar clases directamente en JS */
 /* class MediaPlayer {
-
+...
 } */
-
 
 //Pero para este curso vamos a utilizar prototipos de la siguiente forma
 function MediaPlayer (config) { //como si fuera una funcion normal, y lo que pasemos como parametro, basicamente seria como el constructor de la clase
-   this.media = config.el
+   this.media = config.el;
 }
-
-
 // Para declarar los metodos de esta pseudo-clase, tenemos que hacerlo de la siguiente forma, asignandolos al prototipo de la clase
 MediaPlayer.prototype.play = function () {
-   video.play();
+   this.media.play();
 }
 MediaPlayer.prototype.pause = function () {
-   video.pause();
+   this.media.pause();
 }
-MediaPlayer.prototype.playPause = function () {
-   if (video.readyState >= 3) {
-      if(video.paused) {
-         video.play();
+MediaPlayer.prototype.togglePlay = function () {
+   if (this.media.readyState >= 3) {
+      if(this.media.paused) {
+         this.media.play();
       } else {
-         video.pause();
+         this.media.pause();
       }
    }
 }
 
-const player = new MediaPlayer({ el: video });
 
-/*  ------------------- INTERACCIONES DE USUARIO -------------------  */
-// ↓ click en el boton
-button.onclick = () => {
-   console.log('click en el boton');
-   player.playPause();
-}
-
-// ↓ click directamente en el video
-video.addEventListener('click',player.playPause);
-
-domc
+// Al momento de crear modulos es necesario hacer un export para que funcionen correctamente al momento de ser importados
+export default MediaPlayer;
