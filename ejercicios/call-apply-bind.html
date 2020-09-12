@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Call, Apply y Bind</title>
+</head>
+<body>
+   <h1>Ejercicio Call, Apply y Bind (mirar en consola)</h1>
+
+   <ul>
+      <li><button class="call-to-action">aprender</button></li>
+      <li><button class="call-to-action">aprender mas</button></li>
+      <li><button class="call-to-action">nunca parar de aprender</button></li>
+   </ul>
+
+   <script>
+      function saludar () {
+         console.log(`hola, soy ${this.name}, y me apellido ${this.apellido}`);
+      }
+
+      const richard = {
+         name: 'Richard',
+         apellido: 'Kaufman Lopez'
+      }
+      /* -------------------------- CALL -------------------------- */
+      saludar.call(richard); // hola, soy Richard, y me apellido Kaufman Lopez
+      /* ↑ De esta forma podemos pasarle el objeto del cual formará parte esta funcion cuando se ejecute, 
+      por defecto TODAS las funciones en JS tienen este metodo */
+
+      function caminar (metros, direccion) {
+         console.log(`${this.name} camina ${metros} metros, hacia el ${direccion}`)
+      }
+
+      caminar.call(richard, 400, 'norte'); // Richard camina 400 metros, hacia el norte
+      /* ↑ Cuando queremos pasarle argumentos a la funcion, podemos hacerlo despues de asignar a quien va a pertenecer el this  */
+
+      
+      
+      /* -------------------------- APPLY -------------------------- */
+      caminar.apply(richard, [800,'este']); //Richard camina 800 metros, hacia el este
+      /* ↑ Con apply es practicamente lo mismo que call, pero en este caso se tienen que pasar los parametros extra
+      mediante un array */
+      
+      
+      /* -------------------------- BIND -------------------------- */
+      const daniel = {
+         name: 'daniel',
+         apellido: 'sanchez'
+      }
+      const gabriel = {
+         name: 'gabriel',
+         apellido: 'perez'
+      }
+
+      const danielSaluda = saludar.bind(daniel); // Esto no retornara, ya que bind solo crea una nueva funcion, pero no la ejecuta al instante
+
+      danielSaluda(); // 'hola, soy daniel, y me apellido sanchez'
+
+      const danielCamina = caminar.bind(daniel);
+      /* ↓ Si queremos pasar parametros a una funcion bindeada, podemos hacerlo directamente al invocar la funcion */
+      danielCamina(1000,'este'); // 'daniel camina 1000 metros, hacia el este'
+
+      gabrielCamina = caminar.bind(gabriel,2000) /* ← Pero otra forma de pasar parametros a la funcion puede ser directamente agregarlos al hacer
+      el bind, ADEMAS podemos pasar argumentos parcialmente (pasar algunos en el bind, y otros al llamar a la funcion) (esto se llama cudding) */
+
+      gabrielCamina('sur'); // gabriel camina 2000 metros, hacia el sur
+
+
+      /* -------------------------- Cuando es util usar un metodos u otro -------------------------- */
+      const buttons = document.getElementsByClassName('call-to-action');
+
+      /* ↓ Aqui por ejemplo podemos re-utilizar la funcion de los arrays en los botones, que son del tipo node-list */
+      Array.prototype.forEach.call(buttons, button => {
+         button.onclick = () => alert('nunca pares de aprender');
+      });
+
+
+   </script>
+</body>
+</html>
