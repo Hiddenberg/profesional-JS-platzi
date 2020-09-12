@@ -8,7 +8,7 @@ function MediaPlayer (config) { //como si fuera una funcion normal, y lo que pas
    this.media = config.el;
    this.plugins = config.plugins || []; // Esto es similar a un if ternario
 
-   this._initPlugins();
+   //this._initPlugins();
    this.togglePlay = this.togglePlay.bind(this); // Hacemos un bind para ligar que el 'this' de esta funcion nunca cambie aun al usarlo como referencia
 }
 // Para declarar los metodos de esta pseudo-clase, tenemos que hacerlo de la siguiente forma, asignandolos al prototipo de la clase

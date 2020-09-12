@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Ejercicio propiedad "this"</title>
+</head>
+<body>
+   <h1>Ejercicio sobre la propiedad "this"</h1>
+   <br>
+   <br>
+   <h2>'this' se refiere a un objeto. Ese objeto es el que actualmente esta ejecutando un pedazo de codigo</h2>
+
+   <script >
+      /* El this es una propiedad principalmente utilizada en lenguajes orientados a objetos, pero en JS se puede comportar
+      de forma un tanto distinta */
+      console.log(this); /* ← Al ejecutar el script en el navegador 'this' sera igual al objeto 'window', y al ejecutarse directamente en el servidor
+      retornara un objeto del server mismo*/
+
+      function whoIsThis() {
+         "use strict"; //"use strict"; // De esta forma podemos usar el modo estricto en JS, y podemos ponerlo dentro o fuera de una funcion
+         console.log(this);
+      }
+
+      whoIsThis() // Nos devolvera undefined, ya que el codigo no esta siendo ejecutado por ningun otro bloque de codigo
+
+      const person = {
+         name: 'gabriel',
+         saludar: function () {
+            console.log(`Hola, soy ${this.name}`);
+         }
+      }
+
+      person.saludar();
+
+      /* ↓ 'this' cuando sacamos a una funcion de un objeto */
+      const accion = person.saludar;
+      accion() // 'Hola soy' Nos devuelve la frase incompleta, ya que el 'this' no existe dentro de este contexto (bloque de codigo)
+
+
+      /* ↓ this en el comtexto de una 'clase' */
+      function Person (name) {
+         //this normalmente comienza siendo = {} en cualquier funcion
+         this.name = name;
+      }
+
+      Person.prototype.saludar = function () {
+         console.log(`Hola, me llamo ${this.name}`);
+      }
+
+      const angela = new Person('angela');
+
+      angela.saludar(); // Hola, me llamo angela
+
+      // 'this' se comporta de forma distinta dependiendo de su contexto (el objeto o bloque de codigo donde se encuentre)
+   </script>
+</body>
+</html>
