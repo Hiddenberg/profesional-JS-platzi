@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+</head>
+<body>
+   <h1>Closures (ejercicio en consola)</h1>
+
+   <script>
+      /* let color = 'green';
+
+      function printColor() {
+         console.log(color);
+      }
+
+      printColor(); // green */
+      // ↑ Si hacemos la funcion de esa forma, la variable de color estara siempre disponible (disponible globalmente)
+
+      //↓ Pero para evitar esto podemos declarar la funcion de la siguiente forma como una IIFE (Inmediately-Invoked Function Expression)
+
+      (function () {
+         let color = 'green';
+
+         function printColor() {
+            console.log(color);
+         }
+
+         // printColor();
+      })()
+
+      // Funciones que regresan funciones ---------------------CLOSURES---------------------
+      function makeColorPrinter(color) {
+         let colorMessage = `the color is ${color}`
+         return function () {
+            console.log(colorMessage)
+         }
+      }
+
+      let greenColorPrinter = makeColorPrinter('green');
+
+      //console.log(greenColorPrinter());
+      //greenColorPrinter();
+      /* ↑ Los closures nos permiten implementar algo que NO EXISTE nativamente en JS que son las 'variables privadas' (que no puedan ser accedidas
+      desde otras partes del codigo) */
+
+
+      const counter = {
+         count: 3
+      } //↑ Este objeto esta declarado en el entorno global (se tiene acceso desde cualquiera parte del codigo)
+
+      function makeCounter(n) {
+         let count = n;
+
+         return {
+            increase: function() {
+               return count++
+            },
+            decrease: function() {
+               return count--
+            },
+            getCount: function() {
+               return count
+            },
+         }
+      }
+
+      let counterF = makeCounter(7);
+
+      counterF.count = 0; // Esto no tendra efecto en nuestro counterF
+
+
+      /* Los CLOSURES principalmente nos permiten hacer encapsulamiento en JS  */
+   </script>
+</body>
+</html>
