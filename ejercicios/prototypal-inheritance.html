@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Prototypal inheritance</title>
+</head>
+<body>
+   <h1>Prototypal inheritance</h1>
+
+   <script>
+   
+function Hero(name) {
+   this.name = name;
+}
+
+Hero.prototype.saludar = function() {
+   console.log(`Hola, soy ${this.name}`);
+}
+
+const zelda = new Hero('zelda');
+
+
+/* -------------------- PROPIEDADES DE UNA INSTANCIA -------------------- */
+console.log('name: ' + zelda.name); // name: zelda
+
+/* -------------------- PROPIEDADES DE LA CLASE -------------------- */
+console.log('saludar: ', zelda.saludar); /* saludar:  ƒ () {
+   console.log(`Hola, soy ${this.name}`);
+} */
+
+/* -------------------- PROPIEDADES HEREDADAS POR DEFECTO ej: .toString() -------------------- */
+console.log('toString: ' + zelda.toString); /* toString: function toString() { [native code] } */
+
+/* -------------------- .hasOwnProperty (de donde sale toString o esto?) -------------------- */
+console.log('zelda.hasOwnProperty("name"): ' + zelda.hasOwnProperty("name")); //true (nos indica que SI es una propiedad directametne de zelda)
+console.log('zelda.hasOwnProperty("saludar"): ' + zelda.hasOwnProperty("saludar")); // false (nos indica que NO es propiedad directametne de zelda)
+
+/* ------------ FORMAS DE OBTENER EL PROTOTIPO DE UN OBJETO */
+Object.getPrototypeOf(zelda) === Hero.prototype; // true
+
+/* ↓ Si creamos una funcion en zelda.prototype podemos usarla con 'zelda.funcion', ya que el programa irá buscando dentro de los prototypes
+hasta que encuentre la funcion que le fue solicitada */
+
+Hero.prototype.fight = () => console.log('FIGHT!!'); //guardamos la funcion en el prototipo del Hero
+
+zelda.fight(); // Ahora basicamente este metodo fue 'heredado prototipalmente' hasta zelda
+
+/* ↓ Pero si verificamos a quien pertenece este metodo, podemos verificar que no pertenece directamente a 'zelda'  */
+zelda.hasOwnProperty('fight'); // false (esto es debido a que este metodo pertenece al prototipo y no directamente a 'zelda')
+
+/* NOTA IMPORTANTE: OBJECT es el padre (o punto de partida) de absolutamente todos los objetos en JS (esto incluye a las funciones)  */
+
+
+
+
+   </script>
+</body>
+</html>
