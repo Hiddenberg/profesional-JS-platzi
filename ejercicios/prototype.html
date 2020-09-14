@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Ejercicio objetos tipo prototype</title>
+</head>
+<body>
+   <h1>Ejercicio objetos tipo prototype (ver en consola)</h1>
+
+   <script>
+   //Un objeto comun y corriente
+/*    const zelda = {
+      name: 'Zelda'
+   }
+
+   zelda.saludar = function () {
+      console.log(`hola, soy ${this.name}`)
+   }
+
+   const link = {
+      name: 'Link'
+   }
+
+   link.saludar = function () {
+      console.log(`hola, soy ${this.name}`)
+   } */
+
+   /* ↑ Hasta este punto tenemos que crear una neva funcion para cada objeto, lo cual es poco eficiente */
+
+
+   /* --------------------- CREANDO UN CONSTRUCTOR PARA EL OBJETO HERO --------------------- */
+
+/*    function Hero (name) {
+      const hero = {
+         name: name
+      }
+
+      hero.saludar = function () {
+         console.log(`hola, soy ${this.name}`);
+      }
+
+      return hero
+   }
+
+   const zelda = Hero('zelda');
+
+   zelda.saludar();
+
+   const link = Hero('link');
+
+   link.saludar(); */
+
+/* --------------------------------- PODEMOS EVITAR TENER QUE CREAR LA MISMA FUNCION CADA VEZ --------------------------------- */
+//↓ Esto podria ayudar un poco en temas de rendimiento, ya que no es necesario crear la funcion cada vez que creemos un objeto
+/* const heroMethods = {
+   saludar: function () {
+      console.log(`Me llamo ${this.name}`);
+   },
+}
+
+function Hero (name) {
+      const hero = {
+         name: name
+      }
+
+      hero.saludar = heroMethods.saludar
+
+      return hero
+   }
+
+   const zelda = Hero('zelda');
+   zelda.saludar();
+
+   const link = Hero('link');
+   link.saludar();
+ */
+
+
+/* ---------------------------------------- OBJECT.CREATE() ---------------------------------------- */
+
+//const nuevoObjeto = Object.create(objeto);
+
+/* const heroMethods = {
+   saludar: function () {
+      console.log(`Soy super heroe ${this.name}`);
+   },
+}
+
+function Hero (name) {
+   const hero = Object.create(heroMethods);
+
+   hero.name = name;
+
+   return hero;
+}
+
+   const zelda = Hero('zelda');
+   zelda.saludar();
+
+   const link = Hero('link');
+   link.saludar();
+ */
+/* --------------------------------- LOS METODOS DE HERO DENTRO DE HERO --------------------------------- */
+
+/* const heroMethods = {
+   saludar: function () {
+      console.log(`Soy super heroe ${this.name}`);
+   },
+} */
+
+/* function Hero (name) {
+   const hero = Object.create(Hero.prototype);
+
+   hero.name = name;
+
+   return hero;
+}
+
+Hero.prototype.saludar = function () {
+   console.log(`Soy super heroe ${this.name}`);
+}
+
+
+const zelda = Hero('zelda');
+zelda.saludar();
+
+const link = Hero('link');
+link.saludar(); */
+
+
+
+/* -------------------------- NEW ES UN ATAJO (AZUCAR SINTACTICA) PARA LLEVAR Hero.prototype al objeto -------------------------- */
+/* Cuando usamos new, basicamente lo que hace el programa es automaticamente añadir el Object.create() de 'objeto'.prototype
+(Esto no lo saca directamente del objeto, sino del PROTOTIPO), es por eso que para crear nuevos metodos y propiedades se guardan en el
+prototype en lugar de guardarlas directamente en el objeto mismo */
+
+
+function Hero (name) {
+   // const hero = Object.create(Hero.prototype); // Al usar new esto pasaria a ser 'this = Object.create(Hero.prototype)'
+
+   this.name = name; //pasaria directamente a ser 'this'
+
+   // return hero; // Al usar new automaticamente se hace el 'return this'
+}
+
+Hero.prototype.saludar = function () {
+   console.log(`New:  ${this.name}`);
+}
+
+
+const zelda = new Hero('zelda');
+zelda.saludar();
+
+const link = new Hero('link');
+link.saludar();
+
+   </script>
+</body>
+</html>
