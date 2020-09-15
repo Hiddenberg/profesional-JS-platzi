@@ -1,0 +1,145 @@
+<html>
+  <head>
+    <title>Promesas</title>
+    <style>
+      h5{
+         margin: 5px 0;
+      }
+      .desc-container {
+         width: 500px;
+         border: 2px gray solid;
+         border-radius: 25px;
+         padding: 5px 15px;
+         margin-bottom: 15px;
+      }
+    </style>
+  </head>
+
+   <body>
+      <a href="/ejercicios/">Go back</a>
+
+      <ul>
+         <li><button id="sequence">Get Top Movies in Sequence</button></li>
+         <li><button id="parallel">Get Top Movies in Parallel</button></li>
+         <li><button id="fastest">Get Fastest Top Movie</button></li>
+      </ul>
+
+      <ul id="movies"></ul>
+
+      <script>
+         // Ejemplo: renderMovies([{ title: "Spider-Man", release_date: "2019-06-30", poster_path: "/rjbNpRMoVvqHmhmksbokcyCr7wn.jpg" }])
+         // Traducir las funciones de usar thens a usar async/await
+         // Crear función para que no nos gastemos la cantidad de requests demasiado rapido
+         // Crear función donde hacemos requests secuenciales
+         // Crear función donde hacemos requests en paralelo
+         // Crear función donde obtenemos el primer request que llegue
+
+         // The Movie Database API: https://developers.themoviedb.org/3/getting-started/introduction
+         const apiKey = 'b89fc45c2067cbd33560270639722eae';
+
+
+         /* --------------------------- GET MOVIES --------------------------- */
+         // ↓ La pasamos de promesas a una funcion async
+         async function getMovie(id) {
+         const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}`;
+         const response = await fetch(url);
+         const data = response.json();
+         return data;
+         }
+
+         // ↓ convertimos la funcion de promesas a un async await
+         async function getPopularMovies() {
+         const url = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=${apiKey}`;
+         const response = await fetch(url);
+         const data = await response.json();
+         return data.results;
+         }
+
+
+         /* ↓ Para pasar una funcion de promesas a async await necesitamos poner el prefijo async*/
+         async function getTopMoviesIds(n = 3) {
+         /* return getPopularMovies().then(popularMovies =>
+            popularMovies.slice(0, n).map(movie => movie.id)
+            ); */
+
+            // ↓ de esta forma podemos hacer el manejo de errores en caso de que las promesas fallen
+         /*        try {
+               const popularMovies = await getPopularMovies();
+            } catch (error) {
+
+            } */
+
+            const popularMovies = await getPopularMovies();
+            const ids = popularMovies.slice(0, n).map(movie => movie.id);
+            return ids;
+         }
+
+
+         /* ------------------------------ RENDER ------------------------------ */
+         function renderMovies(movies) {
+         const movieList = document.getElementById('movies');
+         movieList.innerHTML = '';
+
+         movies.forEach(movie => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+               <img src="https://image.tmdb.org/t/p/w342${movie.poster_path}" />
+               <div class="desc-container">
+                  <h5>${movie.title}</h5>
+                  <p>Released on <em>${movie.release_date}</em></p>
+                  <p>Overview:</p>
+                  <p>${movie.overview}</p>
+               </div>
+               `;
+
+            movieList.appendChild(listItem);
+         });
+         }
+
+
+
+         /* ----------------------------- GET MOVIE DIFFERENT WAYS TO HANDLE PROMISES ----------------------------- */
+         async function getTopMoviesInSequence() {
+            const ids = await getTopMoviesIds(50);
+            let movies = [];
+
+            /* ↓ Esto practicamente seria lo mismo que hacer un forEach de 'ids' */
+            for (const id of ids) {
+               const movie = await getMovie(id);
+               movies.push(movie);
+            }
+
+            return movies;
+         }
+
+         async function getTopMoviesInParallel() {
+            const ids = await getTopMoviesIds(50);
+            const moviePromises = ids.map(id => getMovie(id));
+            let movies = await Promise.all(moviePromises); /* ← ES IMPORTANTE tener en cuenta que cuando se utilice promise.all()
+            si una sola promesa falla nos devolvera un error directamente */
+         return movies;
+         }
+
+         async function getFastestTopMovie() {
+         return {};
+         }
+
+
+         /* -------------------------------- INTERACCION DE USUARIO CON LOS BOTONES -------------------------------- */
+         document.getElementById('sequence').onclick = async function() {
+         const movies = await getTopMoviesInSequence();
+         renderMovies(movies);
+         };
+
+         document.getElementById('parallel').onclick = async function() {
+         const movies = await getTopMoviesInParallel();
+         renderMovies(movies);
+         };
+
+         document.getElementById('fastest').onclick = async function() {
+         const movie = await getFastestTopMovie();
+         renderMovies([movie]);
+         };
+      </script>
+   </body>
+</html>
