@@ -48,8 +48,9 @@
          }
 
          // ↓ convertimos la funcion de promesas a un async await
-         async function getPopularMovies() {
-         const url = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=${apiKey}`;
+         async function getPopularMovies(apiPage = 1) {
+         const page = apiPage;
+         const url = `https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&page=${apiPage}&api_key=${apiKey}`;// CHANGE HERE!!!!
          const response = await fetch(url);
          const data = await response.json();
          return data.results;

@@ -16,8 +16,6 @@ function changeButton(button, secondState) {
       button.defaultState = button.innerHTML;
    }
 
-   console.log(button.innerHTML);
-   console.log(button.defaultState);
    button.innerHTML = (button.innerHTML === button.defaultState) ? secondState : button.defaultState;
 }
 
