@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Ejercicio proxys en JS</title>
+</head>
+<body>
+   <h1>Ejercicio proxys en JS (ver en consola)</h1>
+
+   <script src="https://unpkg.com/fast-levenshtein@2.0.6/levenshtein.js"></script>
+   <script >
+
+const target = {
+   red: 'Rojo',
+   green: 'verde',
+   blue: 'azul',
+}
+
+const handler = {
+   get(obj, prop) {
+      if (prop in obj) {
+         return obj[prop];
+      }
+
+      const suggestion = Object.keys(obj).find(key => {
+         return Levenshtein.get(key, prop) < 3;
+         //↓ Lo de arriba es el equivalente a retornar este if
+         /* if (Levenshtein.get(key, prop) < 3) {
+            return key;
+         }*/
+      })
+
+      if (suggestion) {
+         console.log(`${prop} no se encontro, Tal vez quisiste decir ${suggestion}?`);
+      }
+
+      return obj[prop];
+   },
+}
+
+const p = new Proxy(target, handler)
+
+
+
+   </script>
+</body>
+</html>
