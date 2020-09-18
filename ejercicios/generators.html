@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Ejercicio practicando con generadores</title>
+</head>
+<body>
+   <h1>Ejercicio practicando con generadores</h1>
+
+   <script>
+   /* Los generadores son funciones de las que se puede salir y volver a entrar
+   su contexto (su asociacion de variables) sera conservado entre las reentradas
+   cada vez que llamamos a next, la ejecucion del generador va a continuar hasta el proximo yield */
+
+   //Para declarar un generador devemos hacerlo con un asterisco despues del function
+   function* simpleGenerator() {
+      console.log('GENERATOR START');
+      yield;
+      console.log('GENERATOR END');
+   }
+
+   //↓ Esta funcion no es directamente ejecutable, sino que es necesario guardarlo en una variable para posteriormente poder ser ejecutado
+   const gen = simpleGenerator();
+
+   /* Basicamente se podria decir que cuando se invoca a los generadores van por pasos entre cada yield */
+   gen.next(); //GENERATOR START
+   gen.next(); //GENERATOR END
+
+   //↓ Tambien nos es posible crear generadores infinitos
+   function* idMaker(){
+      let id = 1;
+
+      while (true) {
+         yield id; //Al momento de usarlo tiene el mismo efecto que un return
+         id++
+      }
+   }
+
+   const genID = idMaker();
+
+
+   function* idMakerReset(){
+      let id = 1;
+      let reset
+
+      while (true) { //Al momento de usarlo tiene el mismo efecto que un return
+         reset = yield id;
+         if (reset) {
+            id = 1;
+         } else {
+            id++
+         }
+      }
+   }
+
+   genIdReset = idMakerReset();
+
+   //Los generadores son especialmente utiles cuando no sabemos exacatmente cuantos elementos vamos a utilizar
+
+   function* fibonacci() {
+      let a = 1;
+      let b = 1;
+
+      while (true) {
+         const nextNumber = a + b;
+         a = b;
+         b = nextNumber;
+         yield nextNumber;
+      }
+   }
+
+   const fiboGen = fibonacci();
+
+   /* Esto es especialmente util ya que sus variables se pueden mantener a lo largo de su ejecucion en el programa */
+   </script>
+</body>
+</html>
