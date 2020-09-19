@@ -4,7 +4,8 @@
   "description": "Comparto el codigo que cree a lo largo del curso de JS profesional en platzi, asi como las notas que hice a lo largo del mismo",
   "main": "index.js",
   "scripts": {
-    "start": "live-server"
+    "start": "live-server",
+    "startP": "parcel index.html ejercicios/index.html ejercicios/**/*.html"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,15 @@
   },
   "homepage": "https://github.com/Hiddenberg/profesional-JS-platzi#readme",
   "devDependencies": {
-    "live-server": "^1.2.1"
-  }
+    "live-server": "^1.2.1",
+    "parcel-bundler": "^1.12.4",
+    "typescript": "^4.0.3"
+  },
+  "browserslist": [
+    "last 3 and_chr versions",
+    "last 3 chrome versions",
+    "last 3 opera versions",
+    "last 3 ios_saf versions",
+    "last 3 safari versions"
+  ]
 }
