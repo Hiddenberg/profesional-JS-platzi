@@ -1,6 +1,6 @@
-import MediaPlayer from './MediaPlayer.js';
-import AutoPlay from './plugins/AutoPlay.js';
-import AutoPause from './plugins/AutoPause.ts';
+import MediaPlayer from './MediaPlayer';
+import AutoPlay from './plugins/AutoPlay';
+import AutoPause from './plugins/AutoPause';
 
 const video = document.querySelector("video");
 let config = {
@@ -8,8 +8,8 @@ let config = {
    plugins: [new AutoPlay(), new AutoPause()] /* instanciamos el plugin */
 }
 
-const playButton = document.querySelector("#playButton");
-const muteButton = document.querySelector("#muteButton");
+const playButton: HTMLElement = document.querySelector("#playButton");
+const muteButton: HTMLElement = document.querySelector("#muteButton");
 const player = new MediaPlayer(config);
 
 function changeButton(button, secondState) {

@@ -5,16 +5,19 @@
 
 //Pero para este curso vamos a utilizar prototipos de la siguiente forma
 class MediaPlayer {
+   media: HTMLMediaElement;
+   plugins: Array<any>;
+
    constructor(config) {
       this.media = config.el;
       this.plugins = config.plugins || []; // Esto es similar a un if ternario
 
-      this._initPlugins();
+      this.initPlugins();
       this.togglePlay = this.togglePlay.bind(this); // Hacemos un bind para ligar que el 'this' de esta funcion nunca cambie aun al usarlo como referencia
    }
    // Para declarar los metodos de esta pseudo-clase, tenemos que hacerlo de la siguiente forma, asignandolos al prototipo de la clase
-   _initPlugins() {
-      const player = {
+   private initPlugins() {
+/*       const player = {
          play: () => this.play(),
          pause: () => this.pause(),
          media: this.media,
@@ -29,7 +32,7 @@ class MediaPlayer {
                this.media.muted = false;
             }
          }
-      };
+      }; */
 
       this.plugins.forEach(plugin => {
          plugin.run(this);
@@ -54,18 +57,20 @@ class MediaPlayer {
          this.mute();
       }
    }
-}
 
-MediaPlayer.prototype.togglePlay = function (button) {
-   console.log(this.media);
-   if (this.media.readyState >= 3) {
-      if(this.media.paused) {
-         this.play();
-      } else {
-         this.pause();
+   togglePlay () {
+      console.log(this.media);
+      if (this.media.readyState >= 3) {
+         if(this.media.paused) {
+            this.play();
+         } else {
+            this.pause();
+         }
       }
    }
 }
+
+
 
 
 
