@@ -118,6 +118,7 @@
             const moviePromises = ids.map(id => getMovie(id));
             let movies = await Promise.all(moviePromises); /* ← ES IMPORTANTE tener en cuenta que cuando se utilice promise.all()
             si una sola promesa falla nos devolvera un error directamente */
+            console.log(movies);
          return movies;
          }
 
